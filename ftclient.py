@@ -11,6 +11,6 @@ serverName = sys.argv[1]
 #serverPortNumber = int(sys.argv[2])
 
 if (serverName == 'flip1' or serverName == 'flip2' or serverName == 'flip3'): 
-	server_address = (serverName + '.engr.oregonstate.edu', portNumber)
+	#server_address = (serverName + '.engr.oregonstate.edu', serverPortNumber)
 	print 'SERVER: starting up on %s port %s' % server_address
-	sock.bind(server_address)
+	#sock.bind(server_address)

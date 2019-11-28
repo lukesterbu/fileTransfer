@@ -77,8 +77,8 @@ int main(int argc, char *argv[])
 		printf("SERVER: I received this from the client: \"%s\"\n", buffer);
 
 		// If the command received is equal to -l
-		if (strcmp(buffer, '-l')) {
-			memset(allDirectories, '\0', 2048);
+		if (strcmp(buffer, "-l")) {
+			//memset(allDirectories, '\0', 2048);
 			//strcat(allDirectories, getDir());
 			//charsRead = send(establishedConnectionFD, allDirectories, 2047, 0);
 			//if (charsRead < 0)
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 			printf("SERVER: I sent all the files in the current directory to the client\n");
 		}
 		// If the command received is equal to -g
-		else if (strcmp(buffer, '-g')) {
+		else if (strcmp(buffer, "-g")) {
 			// Need code here
 		}
 

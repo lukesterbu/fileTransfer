@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 	socklen_t sizeOfClientInfo;
 	struct sockaddr_in serverAddress, clientAddress;
 	char buffer[500];
+	char allDirectories[2048];
 
 	// Check usage and args
 	if (argc < 2) {
@@ -69,16 +70,26 @@ int main(int argc, char *argv[])
 			error("ERROR on accept");
 		printf("SERVER: Connected Client at port %d\n", ntohs(clientAddress.sin_port));
 		// Get the message from the client and display it
-		memset(buffer, '\0', 256);
-		charsRead = recv(establishedConnectionFD, buffer, 255, 0); // Read the client's message from the socket
+		memset(buffer, '\0', 500);
+		charsRead = recv(establishedConnectionFD, buffer, 499, 0); // Read the client's message from the socket
 		if (charsRead < 0)
 			error("ERROR reading from socket");
 		printf("SERVER: I received this from the client: \"%s\"\n", buffer);
 
-		// Send a Success message back to the client
-		charsRead = send(establishedConnectionFD, "I am the server, and I got your message", 39, 0);
-		if (charsRead < 0)
-			error("ERROR writing to the socket");
+		// If the command received is equal to -l
+		if (strcmp(buffer, '-l')) {
+			memset(allDirectories, '\0', 2048);
+			allDirectories = getDir();
+			charsRead = send(establishedConnectionFD, allDirectories, 2047, 0);
+			if (charsRead < 0)
+				error("ERROR writing to the socket");
+			prinf("SERVER: I sent all the files in the current directory to the client\n");
+		}
+		// If the command received is equal to -g
+		else if (strcmp(buffer, '-g')) {
+			// Need code here
+		}
+
 		close(establishedConnectionFD); // Close the existing socket which is connected to the client
 	}
 	close(listenSocketFD); // Close the listening socket

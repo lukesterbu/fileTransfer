@@ -19,7 +19,7 @@ else:
 	serverName = sys.argv[1] + '.engr.oregonstate.edu'
 
 # Check serverPort
-if (not(sys.argv[2].isnumeric()):
+if (not(sys.argv[2].isnumeric())):
 	printUsage()
 else:
 	serverPort = int(sys.argv[2])

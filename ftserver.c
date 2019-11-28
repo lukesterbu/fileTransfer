@@ -16,7 +16,7 @@ void error(const char *msg) {
 
 // Returns all the files in the current directory as a string
 char* getDir() {
-	char* allDirectories[2047];
+	char allDirectories[2048];
 	struct dirent* entry;
 
 	DIR* directory = opendir(".");
@@ -25,7 +25,7 @@ char* getDir() {
 		return allDirectories;
 	}
 
-	memset(allDirectories, '\0', 2047);
+	memset(allDirectories, '\0', 2048);
 
 	while ((entry = readdir(directory)) != NULL) {
 		strcat(allDirectories, entry->d_name);
@@ -81,9 +81,9 @@ int main(int argc, char *argv[])
 
 		// If the command received is equal to -l
 		if (strcmp(buffer, "-l") == 0) {
-			//memset(allDirectories, '\0', 2048);
-			//strcpy(allDirectories, getDir());
-			charsRead = send(establishedConnectionFD, getDir(), 2047, 0);
+			memset(allDirectories, '\0', 2048);
+			strcpy(allDirectories, getDir());
+			charsRead = send(establishedConnectionFD, allDirectories, 2047, 0);
 			if (charsRead < 0)
 				error("ERROR writing to the socket");
 			printf("SERVER: I sent all the files in the current directory to the client\n");

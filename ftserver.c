@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 		// If the command received is equal to -l
 		if (strcmp(buffer, '-l')) {
 			memset(allDirectories, '\0', 2048);
-			allDirectories = getDir();
+			strcat(allDirectories, getDir());
 			charsRead = send(establishedConnectionFD, allDirectories, 2047, 0);
 			if (charsRead < 0)
 				error("ERROR writing to the socket");

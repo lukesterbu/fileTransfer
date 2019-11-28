@@ -80,9 +80,10 @@ int main(int argc, char *argv[])
 		if (strcmp(buffer, '-l')) {
 			memset(allDirectories, '\0', 2048);
 			strcat(allDirectories, getDir());
-			charsRead = send(establishedConnectionFD, allDirectories, 2047, 0);
-			if (charsRead < 0)
-				error("ERROR writing to the socket");
+			printf("%s", allDirectories);
+			//charsRead = send(establishedConnectionFD, allDirectories, 2047, 0);
+			//if (charsRead < 0)
+				//error("ERROR writing to the socket");
 			printf("SERVER: I sent all the files in the current directory to the client\n");
 		}
 		// If the command received is equal to -g

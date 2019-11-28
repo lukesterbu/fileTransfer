@@ -19,7 +19,7 @@ else:
 	serverName = sys.argv[1] + '.engr.oregonstate.edu'
 
 # Check serverPort
-if (not(sys.argv[2].isnumeric())):
+if (not(unicode(sys.argv[2]).isnumeric())):
 	printUsage(sys.argv)
 else:
 	serverPort = int(sys.argv[2])
@@ -34,7 +34,7 @@ else:
 # Else sys.argv[4] should be the fileName
 if (sys.argv[3] == '-l'):
 	# Check clientPort in position 4
-	if (not(sys.argv[4].isnumeric())):
+	if (not(unicode(sys.argv[4]).isnumeric())):
 		printUsage(sys.argv)
 	else:
 		clientPort = sys.argv[4]
@@ -42,7 +42,7 @@ if (sys.argv[3] == '-l'):
 else:
 	fileName = sys.argv[4]
 	# Check clientPort in position 5
-	if (not(sys.argv[5].isnumeric())):
+	if (not(unicode(sys.argv[5]).isnumeric())):
 		printUsage(sys.argv)
 	else:
 		clientPort = sys.argv[5]

@@ -28,9 +28,9 @@ char* getDir() {
 	memset(allDirectories, '\0', 2048);
 
 	while ((entry = readdir(directory)) != NULL) {
-		strcat(allDirectories, entry->d_name);
-		strcat(allDirectories, '\n');
-		printf("Pass\n");
+		printf("%s\n", entry->d_name);
+		//strcat(allDirectories, entry->d_name);
+		//strcat(allDirectories, '\n');
 	}
 	return allDirectories;
 }

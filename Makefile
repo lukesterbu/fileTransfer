@@ -1,5 +1,6 @@
 ftclient:
-	chmod +x ftclient.py
+	cp ftclient.py ftclient
+	chmod +x ftclient
 
 ftserver:
 	gcc -o ftserver ftserver.c
@@ -7,4 +8,4 @@ ftserver:
 all: ftclient ftserver
 
 clean:
-	rm -f ftserver
+	rm -f ftclient ftserver

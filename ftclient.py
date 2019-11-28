@@ -4,7 +4,7 @@ import sys
 import signal
 
 # Shows the user the correct usage and then exits with code 1
-def printUsage(sys.argv):
+def printUsage(argv):
 	print 'USAGE: %s [serverName] [serverPort] [command (-l or -g)] [fileName (optional if command is -l)] [clientPort]' % argv[0]
 	exit(1)
 

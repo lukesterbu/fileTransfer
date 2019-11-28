@@ -65,8 +65,10 @@ print "CLIENT: starting up on", serverName, "port", serverPort
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+print socket.gethostname();
+
 # Bind the client to its port
-sock.bind((0,clientPort))
+#sock.bind((0,clientPort))
 
 # Connect to the socket
 sock.connect((serverName,serverPort))

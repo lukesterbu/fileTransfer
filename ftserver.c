@@ -16,7 +16,7 @@ void error(const char *msg) {
 
 // Returns all the files in the current directory as a string
 char* getDir() {
-	char allDirectories[2048];
+	char* allDirectories = (char*)malloc(sizeof(char) * 2048);
 	struct dirent* entry;
 
 	DIR* directory = opendir(".");
@@ -28,9 +28,8 @@ char* getDir() {
 	memset(allDirectories, '\0', 2048);
 
 	while ((entry = readdir(directory)) != NULL) {
-		printf("%s\n", entry->d_name);
-		//strcat(allDirectories, entry->d_name);
-		//strcat(allDirectories, '\n');
+		strcat(allDirectories, entry->d_name);
+		strcat(allDirectories, '\n');
 	}
 	return allDirectories;
 }

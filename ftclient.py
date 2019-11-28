@@ -8,6 +8,9 @@ def printUsage(argv):
 	print 'USAGE: %s [serverName] [serverPort] [command (-l or -g)] [fileName (optional if command is -l)] [clientPort]' % argv[0]
 	exit(1)
 
+#############################################################################################
+################################# COMMAND LINE ARGUMENT CHECK ###############################
+#############################################################################################
 # Check length of argv
 if (len(sys.argv) < 5 or len(sys.argv) > 6):
 	printUsage(sys.argv)
@@ -52,6 +55,10 @@ else:
 		printUsage(sys.argv)
 	else:
 		clientPort = sys.argv[5]
+
+#############################################################################################
+####################################### SOCKET SET UP #######################################
+#############################################################################################
 
 print "CLIENT: starting up on", serverName, "port", serverPort
 

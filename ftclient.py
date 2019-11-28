@@ -8,7 +8,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind the socket to the port
 serverName = sys.argv[1]
-serverPortNumber = int(sys.argv[2])
+#serverPortNumber = int(sys.argv[2])
 
 if (serverName == 'flip1' or serverName == 'flip2' or serverName == 'flip3'): 
 	server_address = (serverName + '.engr.oregonstate.edu', portNumber)

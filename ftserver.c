@@ -29,7 +29,7 @@ char* getDir() {
 
 	while ((entry = readdir(directory)) != NULL) {
 		strcat(allDirectories, entry->d_name);
-		strcat(allDirectories, '\n');
+		strcat(allDirectories, "\n");
 	}
 	return allDirectories;
 }

@@ -47,7 +47,7 @@ else:
 	else:
 		clientPort = sys.argv[5]
 
-print 'CLIENT: starting up on %s port %s' % server_address
+print 'CLIENT: starting up on %s port %s' % serverName serverPort
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

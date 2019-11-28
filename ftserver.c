@@ -30,6 +30,7 @@ char* getDir() {
 	while ((entry = readdir(directory)) != NULL) {
 		strcat(allDirectories, entry->d_name);
 		strcat(allDirectories, '\n');
+		printf("Pass\n");
 	}
 	return allDirectories;
 }

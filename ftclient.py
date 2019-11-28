@@ -8,7 +8,11 @@ def printUsage(argv):
 	print 'USAGE: %s [serverName] [serverPort] [command (-l or -g)] [fileName (optional if command is -l)] [clientPort]' % argv[0]
 	exit(1)
 
-# Check argv length based on command in argv position 3
+# Check length of argv
+if (len(sys.argv) < 5 or len(sys.argv) > 6):
+	printUsage(sys.argv)
+
+# Check length based on command in argv position 3
 if (sys.argv[3] == '-l' and len(sys.argv) != 5):
 	printUsage(sys.argv)
 elif (sys.argv[3] == '-g' and len(sys.argv) != 6):

@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 	serverAddress.sin_addr.s_addr = INADDR_ANY; // Any address is allowed for connectin to this process
 
 	// Set up the socket
-	listenSocketFD = socket(AF_INET, SOCK_STREM, 0); // Create the socket
+	listenSocketFD = socket(AF_INET, SOCK_STREAM, 0); // Create the socket
 	if (listenSocketFD < 0)
 		error("ERROR opening socket");
 

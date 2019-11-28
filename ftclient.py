@@ -69,10 +69,10 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect((serverName,serverPort))
 
 # Send the command
-sock.send(command);
+sock.send(command)
 
 # Receive the message
-serverMessage = clientSocket.recv(2048)
+serverMessage = sock.recv(2048)
 
 # Print the message
 print serverMessage

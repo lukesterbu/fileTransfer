@@ -16,7 +16,7 @@ void error(const char *msg) {
 
 // Returns all the files in the current directory as a string
 char* getDir() {
-	char* allDirectories[2048] = {'\0'};
+	char* allDirectories[2048];
 	struct dirent* entry;
 
 	DIR* directory = opendir(".");
@@ -24,6 +24,9 @@ char* getDir() {
 	if (directory == NULL) {
 		return allDirectories;
 	}
+
+	memset(allDirectories, '\0', 2048);
+
 	while ((entry = readdir(directory)) != NULL) {
 		strcat(allDirectories, entry->d_name);
 		strcat(allDirectories, '\n');
@@ -79,7 +82,7 @@ int main(int argc, char *argv[])
 		// If the command received is equal to -l
 		if (strcmp(buffer, "-l") == 0) {
 			memset(allDirectories, '\0', 2048);
-			strcat(allDirectories, getDir());
+			strcpy(allDirectories, getDir());
 			charsRead = send(establishedConnectionFD, allDirectories, 2047, 0);
 			if (charsRead < 0)
 				error("ERROR writing to the socket");

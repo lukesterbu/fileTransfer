@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 	portNumber = atoi(argv[1]); // Get the port number, convert to an integer from a string
 	serverAddress.sin_family = AF_INET; // Create a network-capable socket
 	serverAddress.sin_port = htons(portNumber); // Store the port number
-	serverAddress.sin_addr.s_addr = INADDR_ANY; // Any address is allowed for connectin to this process
+	serverAddress.sin_addr.s_addr = INADDR_ANY; // Any address is allowed for connecting to this process
 
 	// Set up the socket
 	listenSocketFD = socket(AF_INET, SOCK_STREAM, 0); // Create the socket

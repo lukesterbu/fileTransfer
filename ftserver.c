@@ -16,7 +16,7 @@ void error(const char *msg) {
 
 // Returns all the files in the current directory as a string
 char* getDir() {
-	char* allDirectories[2048];
+	char* allDirectories[2047];
 	struct dirent* entry;
 
 	DIR* directory = opendir(".");
@@ -25,7 +25,7 @@ char* getDir() {
 		return allDirectories;
 	}
 
-	memset(allDirectories, '\0', 2048);
+	memset(allDirectories, '\0', 2047);
 
 	while ((entry = readdir(directory)) != NULL) {
 		strcat(allDirectories, entry->d_name);

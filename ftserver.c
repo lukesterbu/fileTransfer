@@ -25,7 +25,7 @@ char* getDir() {
 		return allDirectories;
 	}
 	while ((entry = readdir(directory)) != NULL) {
-		strcat(allDirectories, de->d_name);
+		strcat(allDirectories, entry->d_name);
 		strcat(allDirectories, '\n');
 	}
 	return allDirectories;

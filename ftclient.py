@@ -50,10 +50,10 @@ else:
 print("CLIENT: starting up on", serverName, "port", serverPort)
 
 # Create a TCP/IP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to the socket
-sock.connect((serverName,serverPort))
+#sock.connect((serverName,serverPort))
 
 # Close the socket
-sock.close()
+#sock.close()

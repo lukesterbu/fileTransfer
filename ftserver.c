@@ -6,10 +6,29 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <dirent.h>
 
+// Error handling function
 void error(const char *msg) {
 	perror(msg);
 	exit(1);
+}
+
+// Returns all the files in the current directory as a string
+char* getDir() {
+	char* allDirectories[2048] = {'\0'};
+	struct dirent* entry;
+
+	DIR* directory = opendir(".");
+
+	if (directory == NULL) {
+		return allDirectories;
+	}
+	while ((entry = readdir(directory)) != NULL) {
+		strcat(allDirectories, de->d_name);
+		strcat(allDirectories, '\n');
+	}
+	return allDirectories;
 }
 
 int main(int argc, char *argv[])

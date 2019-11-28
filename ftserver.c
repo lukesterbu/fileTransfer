@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 			charsRead = send(establishedConnectionFD, allDirectories, 2047, 0);
 			if (charsRead < 0)
 				error("ERROR writing to the socket");
-			prinf("SERVER: I sent all the files in the current directory to the client\n");
+			printf("SERVER: I sent all the files in the current directory to the client\n");
 		}
 		// If the command received is equal to -g
 		else if (strcmp(buffer, '-g')) {

@@ -86,7 +86,8 @@ int main(int argc, char *argv[])
 		//charsRead = recv(establishedConnectionFD, buffer, 499, 0); // Read the client's message from the socket
 		//if (charsRead < 0)
 			//error("ERROR reading from socket");
-		printf("%s\n", listenSocketFD.gethostname(hostName, HOST_NAME_MAX + 1));
+		gethostname(hostName, HOST_NAME_MAX + 1);
+		printf("%s\n", hostName);
 		//if (strcmp(buffer, listenSocketFD.gethostname()) != 0) {
 			//error("The requested connection does not match the host name of this server.");
 		//}

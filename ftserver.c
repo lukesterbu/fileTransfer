@@ -65,12 +65,16 @@ int main(int argc, char *argv[])
 		error("ERROR on binding");
 	listen(listenSocketFD, 5); // Flip the socket on - it can no receive up to 5 connections
 
+	// Let the user know that the server is open for connections
+	printf("Server open on %d\n", argv[1]);
+
 	while (1) {
 		// Accept a connection, blocking if one is not available until one connects
 		sizeOfClientInfo = sizeof(clientAddress); // Get the size of the address for the client that will connect
 		establishedConnectionFD = accept(listenSocketFD, (struct sockaddr *)&clientAddress, &sizeOfClientInfo); // Accept
 		if (establishedConnectionFD < 0)
 			error("ERROR on accept");
+		printf("Connection from %s.\n", clientAddress.sin_addr);
 		printf("SERVER: Connected Client at port %d\n", ntohs(clientAddress.sin_port));
 		// Get the message from the client and display it
 		memset(buffer, '\0', 500);

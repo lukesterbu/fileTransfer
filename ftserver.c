@@ -75,8 +75,16 @@ int main(int argc, char *argv[])
 		if (establishedConnectionFD < 0)
 			error("ERROR on accept");
 
-		// Print the client IP & hostname
-		//printf("Connection from %s.\n", inet_ntoa(clientAddress.sin_addr));
+		// Get the message from the client and display it
+		//memset(buffer, '\0', 500);
+		//charsRead = recv(establishedConnectionFD, buffer, 499, 0); // Read the client's message from the socket
+		//if (charsRead < 0)
+			//error("ERROR reading from socket");
+		printf("%s\n", listenSocketFD.gethostname());
+		//if (strcmp(buffer, listenSocketFD.gethostname()) != 0) {
+			//error("The requested connection does not match the host name of this server.");
+		//}
+
 		// Print the client port number
 		printf("SERVER: Connected Client at port %d\n", ntohs(clientAddress.sin_port));
 

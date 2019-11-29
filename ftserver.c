@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 	listen(listenSocketFD, 5); // Flip the socket on - it can no receive up to 5 connections
 
 	// Let the user know that the server is open for connections
-	printf("Server open on %d\n", argv[1]);
+	printf("Server open on %d\n", portNumber);
 
 	while (1) {
 		// Accept a connection, blocking if one is not available until one connects

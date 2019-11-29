@@ -7,6 +7,11 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <dirent.h>
+#include <limits.h>
+
+#define BUFFER_SIZE 500
+#define DIRECTORY_SIZE 2048
+#define HOST_NAME_MAX 256
 
 // Error handling function
 void error(const char *msg) {
@@ -16,7 +21,7 @@ void error(const char *msg) {
 
 // Returns all the files in the current directory as a string
 char* getDir() {
-	char* allDirectories = (char*)malloc(sizeof(char) * 2048);
+	char* allDirectories = (char*)malloc(sizeof(char) * DIRECTORY_SIZE);
 	struct dirent* entry;
 
 	DIR* directory = opendir(".");
@@ -25,7 +30,7 @@ char* getDir() {
 		return allDirectories;
 	}
 
-	memset(allDirectories, '\0', 2048);
+	memset(allDirectories, '\0', DIRECTORY_SIZE);
 
 	while ((entry = readdir(directory)) != NULL) {
 		strcat(allDirectories, entry->d_name);
@@ -39,8 +44,9 @@ int main(int argc, char *argv[])
 	int listenSocketFD, establishedConnectionFD, portNumber, charsWritten, charsRead;
 	socklen_t sizeOfClientInfo;
 	struct sockaddr_in serverAddress, clientAddress;
-	char buffer[500];
-	char allDirectories[2048];
+	char buffer[BUFFER_SIZE];
+	char allDirectories[DIRECTORY_SIZE];
+	char hostName[HOST_NAME_MAX];
 
 	// Check usage and args
 	if (argc < 2) {
@@ -80,7 +86,7 @@ int main(int argc, char *argv[])
 		//charsRead = recv(establishedConnectionFD, buffer, 499, 0); // Read the client's message from the socket
 		//if (charsRead < 0)
 			//error("ERROR reading from socket");
-		printf("%s\n", listenSocketFD.gethostname());
+		printf("%s\n", listenSocketFD.gethostname(hostName, HOST_NAME_MAX + 1));
 		//if (strcmp(buffer, listenSocketFD.gethostname()) != 0) {
 			//error("The requested connection does not match the host name of this server.");
 		//}
@@ -89,17 +95,17 @@ int main(int argc, char *argv[])
 		printf("SERVER: Connected Client at port %d\n", ntohs(clientAddress.sin_port));
 
 		// Get the message from the client and display it
-		memset(buffer, '\0', 500);
-		charsRead = recv(establishedConnectionFD, buffer, 499, 0); // Read the client's message from the socket
+		memset(buffer, '\0', BUFFER_SIZE);
+		charsRead = recv(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0); // Read the client's message from the socket
 		if (charsRead < 0)
 			error("ERROR reading from socket");
 		printf("SERVER: I received this from the client: \"%s\"\n", buffer);
 
 		// If the command received is equal to -l
 		if (strcmp(buffer, "-l") == 0) {
-			memset(allDirectories, '\0', 2048);
+			memset(allDirectories, '\0', DIRECTORY_SIZE);
 			strcpy(allDirectories, getDir());
-			charsRead = send(establishedConnectionFD, allDirectories, 2047, 0);
+			charsRead = send(establishedConnectionFD, allDirectories, DIRECTORY_SIZE - 1, 0);
 			if (charsRead < 0)
 				error("ERROR writing to the socket");
 			printf("SERVER: I sent all the files in the current directory to the client\n");

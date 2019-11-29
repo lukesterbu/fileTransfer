@@ -75,12 +75,6 @@ host_ip = socket.gethostbyname(host_name);
 # Connect to the socket
 sock.connect((serverName,serverPort))
 
-# Send the intended server that we are going to connect with
-#sock.send(serverName)
-
-# Get validation message from server
-#serverMessage = sock.recv(2048)
-
 # Send the command
 sock.send(command)
 

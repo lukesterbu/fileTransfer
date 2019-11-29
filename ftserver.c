@@ -84,24 +84,6 @@ int main(int argc, char *argv[])
 		if (establishedConnectionFD < 0)
 			error("ERROR on accept");
 
-		/*// Get the message from the client and display it
-		memset(buffer, '\0', BUFFER_SIZE);
-		charsRead = recv(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0); // Read the client's message from the socket
-		if (charsRead < 0)
-			error("ERROR reading from socket"); */
-		
-		/*// Make sure that the host name specified from the client matches the server's host name
-		if (strcmp(buffer, serverHostName) != 0) {
-			error("The requested connection does not match the host name of this server.");
-		} */
-
-		/*// Send a validation tht the server host name matches
-		memset(buffer, '\0', BUFFER_SIZE);
-		strcpy(buffer, "MATCH");
-		charsRead = send(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0);
-		if (charsRead < 0)
-			error("ERROR writing to the socket"); */
-
 		// Print out the client host name
 		printf("Connection from [clientHostName].\n");
 

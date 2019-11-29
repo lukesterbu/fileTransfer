@@ -81,15 +81,14 @@ int main(int argc, char *argv[])
 			error("ERROR on accept");
 
 		// Get the message from the client and display it
-		//memset(buffer, '\0', 500);
-		//charsRead = recv(establishedConnectionFD, buffer, 499, 0); // Read the client's message from the socket
-		//if (charsRead < 0)
-			//error("ERROR reading from socket");
+		memset(buffer, '\0', BUFFER_SIZE);
+		charsRead = recv(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0); // Read the client's message from the socket
+		if (charsRead < 0)
+			error("ERROR reading from socket");
 		gethostname(hostName, HOST_NAME_MAX + 1);
-		printf("%s\n", hostName);
-		//if (strcmp(buffer, listenSocketFD.gethostname()) != 0) {
-			//error("The requested connection does not match the host name of this server.");
-		//}
+		if (strcmp(buffer, hostName) != 0) {
+			error("The requested connection does not match the host name of this server.");
+		}
 
 		// Print the client port number
 		printf("SERVER: Connected Client at port %d\n", ntohs(clientAddress.sin_port));

@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 			error("ERROR on accept");
 
 		// Print the client IP & hostname
-		printf("Connection from %s.\n", inet_ntoa(clientAddress.sin_addr));
+		//printf("Connection from %s.\n", inet_ntoa(clientAddress.sin_addr));
 		// Print the client port number
 		printf("SERVER: Connected Client at port %d\n", ntohs(clientAddress.sin_port));
 

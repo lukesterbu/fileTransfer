@@ -11,7 +11,6 @@
 
 #define BUFFER_SIZE 500
 #define DIRECTORY_SIZE 2048
-#define HOST_NAME_MAX 256
 
 // Error handling function
 void error(const char *msg) {

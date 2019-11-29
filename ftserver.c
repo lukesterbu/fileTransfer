@@ -45,13 +45,17 @@ int main(int argc, char *argv[])
 	struct sockaddr_in serverAddress, clientAddress;
 	char buffer[BUFFER_SIZE];
 	char allDirectories[DIRECTORY_SIZE];
-	char hostName[HOST_NAME_MAX];
+	char serverHostName[HOST_NAME_MAX];
+	char clientHostName[HOST_NAME_MAX];
 
 	// Check usage and args
 	if (argc < 2) {
 		fprintf(stderr, "USAGE: %s port\n", argv[0]);
 		exit(1);
 	}
+
+	// Get this server's host name
+	gethostname(serverHostName, HOST_NAME_MAX + 1);
 
 	// Set up the address struct for this process (the server)
 	memset((char*)&serverAddress, '\0', sizeof(serverAddress)); // Clear out the address struct
@@ -85,12 +89,21 @@ int main(int argc, char *argv[])
 		charsRead = recv(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0); // Read the client's message from the socket
 		if (charsRead < 0)
 			error("ERROR reading from socket");
-		gethostname(hostName, HOST_NAME_MAX + 1);
-		printf("%s\n", buffer);
-		printf("%s\n", hostName);
-		if (strcmp(buffer, hostName) != 0) {
+		
+		// Make sure that the host name specified from the client matches the server's host name
+		if (strcmp(buffer, serverHostName) != 0) {
 			error("The requested connection does not match the host name of this server.");
 		}
+
+		// Send a validation tht the server host name matches
+		memset(buffer, '\0', BUFFER_SIZE);
+		strcpy(buffer, "MATCH");
+		charsRead = send(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0);
+		if (charsRead < 0)
+			error("ERROR writing to the socket");
+
+		// Print out the client host name
+		printf("Connection from [clientHostName].\n");
 
 		// Print the client port number
 		printf("SERVER: Connected Client at port %d\n", ntohs(clientAddress.sin_port));

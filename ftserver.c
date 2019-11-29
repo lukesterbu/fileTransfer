@@ -86,6 +86,8 @@ int main(int argc, char *argv[])
 		if (charsRead < 0)
 			error("ERROR reading from socket");
 		gethostname(hostName, HOST_NAME_MAX + 1);
+		printf("%s\n", buffer);
+		printf("%s\n", hostName);
 		if (strcmp(buffer, hostName) != 0) {
 			error("The requested connection does not match the host name of this server.");
 		}

@@ -70,7 +70,7 @@ host_name = socket.gethostname();
 host_ip = socket.gethostbyname(host_name);
 
 # Bind the client to its port
-sock.bind((host_ip,clientPort))
+#sock.bind((host_ip,clientPort))
 
 # Connect to the socket
 sock.connect((serverName,serverPort))

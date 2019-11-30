@@ -8,6 +8,7 @@
 #include <netdb.h>
 #include <dirent.h>
 #include <limits.h>
+#include <fcntl.h>
 
 #define BUFFER_SIZE 500
 #define DIRECTORY_SIZE 2048

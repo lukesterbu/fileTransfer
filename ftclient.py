@@ -67,7 +67,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Get host name
 host_name = socket.gethostname()
-host_name.split('.')
+shortHostName = host_name.split('.')
 
 # Bind the client to its port
 #sock.bind((host_ip,clientPort))
@@ -76,7 +76,7 @@ host_name.split('.')
 sock.connect((serverName,serverPort))
 
 # Send short server name
-sock.send(host_name[0])
+sock.send(shortHostName[0])
 
 # Send the command
 sock.send(command)

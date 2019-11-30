@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 		// If the command received is equal to -l
 		if (strcmp(buffer, "-l") == 0) {
 			printf("List directory requested on port %d.\n", ntohs(clientAddress.sin_port));
-			printf("Sending directory contents to %s:%d", clientHostName, ntohs(clientAddress.sin_port));
+			printf("Sending directory contents to %s:%d\n", clientHostName, ntohs(clientAddress.sin_port));
 			memset(allDirectories, '\0', DIRECTORY_SIZE);
 			strcpy(allDirectories, getDir());
 			charsRead = send(establishedConnectionFD, allDirectories, DIRECTORY_SIZE - 1, 0);

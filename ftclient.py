@@ -87,7 +87,11 @@ if (command == '-l'):
 	print "Receiving directory structure from " + shortServerName + ":" + str(serverPort)
 elif (command == '-g'):
 	sock.send(fileName)
-	print 'Receiving "' + fileName + '" from ' + shortServerName + ':' + str(serverPort) 
+	serverMessage = sock.recv(2048)
+	if (serverMessage == "FILE NOT FOUND"):
+		print shortServerName + ":" + str(serverPort) + " says " + serverMessage
+	else:
+		print 'Receiving "' + fileName + '" from ' + shortServerName + ':' + str(serverPort) 
 
 # Receive the message
 serverMessage = sock.recv(2048)

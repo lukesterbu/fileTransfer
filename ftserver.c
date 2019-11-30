@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 			// File doens't exist
 			fd = open(fileName, O_RDONLY);
 			printf("%d\n", fd);
-			if (fd == -1) {
+			if (fd < 0) {
 				printf("File not found. Sending error message to %s:%d", clientHostName, ntohs(clientAddress.sin_port));
 				memset(buffer, '\0', BUFFER_SIZE);	
 				strcpy(buffer, "FILE NOT FOUND");

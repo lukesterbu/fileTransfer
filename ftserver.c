@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 			}
 			// File doesn't exists
 			else {
-				printf("File not found. Sending error message to %s:%d", clientHostName, ntohs(clientAddress.sin_port));
+				printf("File not found. Sending error message to %s:%d\n", clientHostName, ntohs(clientAddress.sin_port));
 				memset(buffer, '\0', BUFFER_SIZE);	
 				strcpy(buffer, "FILE NOT FOUND");
 				charsRead = send(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0);

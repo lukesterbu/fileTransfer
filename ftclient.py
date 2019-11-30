@@ -73,7 +73,7 @@ shortHostName = hostName.split('.')
 #sock.bind((host_ip,clientPort))
 
 # Connect to the socket
-sock.bind((socket.gethostname(),clientPort))
+sock.bind(('',clientPort))
 sock.connect((serverName,serverPort))
 
 # Send short server name

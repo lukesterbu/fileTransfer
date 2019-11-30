@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 	char allDirectories[DIRECTORY_SIZE];
 	char serverHostName[HOST_NAME_MAX];
 	char clientHostName[HOST_NAME_MAX];
-	int fd;
+	FILE* file;
 
 	// Check usage and args
 	if (argc < 2) {
@@ -122,23 +122,21 @@ int main(int argc, char *argv[])
 			if (charsRead < 0)
 				error("ERROR reading from socket");
 			printf("File \"%s\" requested on port %d.\n", fileName, ntohs(clientAddress.sin_port));
-			// File doens't exist
-			fd = open(fileName, O_RDONLY);
-			printf("%d\n", fd);
-			if (fd < 0) {
+			// File doesn't exist
+			if (file = fopen(fileName, "r")) {
+				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
+				// Send file size
+
+				// Send file contents
+			}
+			// File doesn't exists
+			else {
 				printf("File not found. Sending error message to %s:%d", clientHostName, ntohs(clientAddress.sin_port));
 				memset(buffer, '\0', BUFFER_SIZE);	
 				strcpy(buffer, "FILE NOT FOUND");
 				charsRead = send(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0);
 				if (charsRead < 0)
-					error("ERROR writing to the socket");				
-			}
-			// File exists
-			else {
-				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
-				// Send file size
-
-				// Send file contents
+					error("ERROR writing to the socket");
 			}
 		}
 

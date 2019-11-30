@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 			error("ERROR on accept");
 
 		// Get the message from the client and display it
-		memset(clientHostName, '\0', BUFFER_SIZE);
+		memset(clientHostName, '\0', HOST_NAME_MAX);
 		charsRead = recv(establishedConnectionFD, clientHostName, HOST_NAME_MAX - 1, 0);
 		if (charsRead < 0)
 			error("ERROR reading from socket");

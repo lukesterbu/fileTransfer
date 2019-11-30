@@ -84,8 +84,13 @@ int main(int argc, char *argv[])
 		if (establishedConnectionFD < 0)
 			error("ERROR on accept");
 
+		// Get the message from the client and display it
+		memset(buffer, '\0', BUFFER_SIZE);
+		charsRead = recv(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0); // Read the client's message from the socket
+		if (charsRead < 0)
+			error("ERROR reading from socket");
 		// Print out the client host name
-		printf("Connection from [clientHostName].\n");
+		printf("Connection from %s.\n", buffer);
 
 		// Print the client port number
 		printf("SERVER: Connected Client at port %d\n", ntohs(clientAddress.sin_port));

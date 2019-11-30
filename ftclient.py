@@ -25,6 +25,7 @@ elif (sys.argv[3] == '-g' and len(sys.argv) != 6):
 if (sys.argv[1] != 'flip1' and sys.argv[1] != 'flip2' and sys.argv[1] != 'flip3'): 
 	printUsage(sys.argv)
 else:
+	shortServerName = sys.argv[1]
 	serverName = sys.argv[1] + '.engr.oregonstate.edu'
 
 # Check serverPort
@@ -74,6 +75,9 @@ host_ip = socket.gethostbyname(host_name);
 
 # Connect to the socket
 sock.connect((serverName,serverPort))
+
+# Send short server name
+sock.send(shortServerName)
 
 # Send the command
 sock.send(command)

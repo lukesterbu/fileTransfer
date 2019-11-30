@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
 	char allDirectories[DIRECTORY_SIZE];
 	char serverHostName[HOST_NAME_MAX];
 	char clientHostName[HOST_NAME_MAX];
+	int fd;
 
 	// Check usage and args
 	if (argc < 2) {
@@ -95,12 +96,12 @@ int main(int argc, char *argv[])
 		// Print out the client host name
 		printf("Connection from %s.\n", clientHostName);
 
-		// Get the command from the client
+		// Get the command from the client. Either "-l" or "-g"
 		memset(command, '\0', COMMAND_SIZE);
 		charsRead = recv(establishedConnectionFD, command, COMMAND_SIZE - 1, 0); // Read the client's message from the socket
 		if (charsRead < 0)
 			error("ERROR reading from socket");
-		printf("SERVER: I received this from the client: \"%s\"\n", command);
+		//printf("SERVER: I received this from the client: \"%s\"\n", command);
 
 		// If the command received is equal to -l
 		if (strcmp(command, "-l") == 0) {
@@ -119,21 +120,23 @@ int main(int argc, char *argv[])
 			charsRead = recv(establishedConnectionFD, fileName, BUFFER_SIZE - 1, 0);
 			if (charsRead < 0)
 				error("ERROR reading from socket");
-			printf("SERVER: I received this from the client: \"%s\"\n", fileName);
-
 			printf("File \"%s\" requested on port %d.\n", fileName, ntohs(clientAddress.sin_port));
-			// File exists
-			if (access(fileName, F_OK) != 1) {
-				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
-			}
-			// File doesn't exist
-			else {
+			// File doens't exist
+			fd = open(fileName, O_RDONLY);
+			if (fd == -1) {
 				printf("File not found. Sending error message to %s:%d", clientHostName, ntohs(clientAddress.sin_port));
 				memset(buffer, '\0', BUFFER_SIZE);	
 				strcpy(buffer, "FILE NOT FOUND");
 				charsRead = send(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0);
 				if (charsRead < 0)
-					error("ERROR writing to the socket");
+					error("ERROR writing to the socket");				
+			}
+			// File exists
+			else {
+				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
+				// Send file size
+
+				// Send file contents
 			}
 		}
 

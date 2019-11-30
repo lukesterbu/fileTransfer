@@ -46,7 +46,7 @@ if (sys.argv[3] == '-l'):
 	if (not(unicode(sys.argv[4]).isnumeric())):
 		printUsage(sys.argv)
 	else:
-		clientPort = sys.argv[4]
+		clientPort = int(sys.argv[4])
 # Command was -g so fileName is in sys.argv[4] and clientPort should be in sys.argv[5]
 else:
 	fileName = sys.argv[4]
@@ -54,7 +54,7 @@ else:
 	if (not(unicode(sys.argv[5]).isnumeric())):
 		printUsage(sys.argv)
 	else:
-		clientPort = sys.argv[5]
+		clientPort = int(sys.argv[5])
 
 #############################################################################################
 ####################################### SOCKET SET UP #######################################
@@ -68,12 +68,12 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # Get host name
 hostName = socket.gethostname()
 shortHostName = hostName.split('.')
+hostIP = socket.gethostbyname(hostName)
 
 # Bind the client to its port
-#sock.bind((host_ip,clientPort))
+sock.bind((hostIP,clientPort))
 
 # Connect to the socket
-sock.bind(('',clientPort))
 sock.connect((serverName,serverPort))
 
 # Send short server name

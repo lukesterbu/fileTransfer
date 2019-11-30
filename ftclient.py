@@ -66,8 +66,8 @@ print "CLIENT: starting up on", serverName, "port", serverPort
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Get host name
-host_name = socket.gethostname();
-host_ip = socket.gethostbyname(host_name);
+host_name = socket.gethostname()
+host_name.split('.')
 
 # Bind the client to its port
 #sock.bind((host_ip,clientPort))
@@ -76,7 +76,7 @@ host_ip = socket.gethostbyname(host_name);
 sock.connect((serverName,serverPort))
 
 # Send short server name
-sock.send(host_name)
+sock.send(host_name[0])
 
 # Send the command
 sock.send(command)

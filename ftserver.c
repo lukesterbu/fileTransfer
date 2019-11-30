@@ -85,12 +85,12 @@ int main(int argc, char *argv[])
 			error("ERROR on accept");
 
 		// Get the message from the client and display it
-		memset(buffer, '\0', BUFFER_SIZE);
-		charsRead = recv(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0); // Read the client's message from the socket
+		memset(clientHostName, '\0', BUFFER_SIZE);
+		charsRead = recv(establishedConnectionFD, clientHostName, HOST_NAME_MAX - 1, 0);
 		if (charsRead < 0)
 			error("ERROR reading from socket");
 		// Print out the client host name
-		printf("Connection from %s.\n", buffer);
+		printf("Connection from %s.\n", clientHostName);
 
 		// Print the client port number
 		printf("SERVER: Connected Client at port %d\n", ntohs(clientAddress.sin_port));
@@ -104,12 +104,13 @@ int main(int argc, char *argv[])
 
 		// If the command received is equal to -l
 		if (strcmp(buffer, "-l") == 0) {
+			printf("List directory requested on port %d.\n", ntohs(clientAddress.sin_port));
+			printf("Sending directory contents to %s:%d", clientHostName, ntohs(clientAddress.sin_port));
 			memset(allDirectories, '\0', DIRECTORY_SIZE);
 			strcpy(allDirectories, getDir());
 			charsRead = send(establishedConnectionFD, allDirectories, DIRECTORY_SIZE - 1, 0);
 			if (charsRead < 0)
 				error("ERROR writing to the socket");
-			printf("SERVER: I sent all the files in the current directory to the client\n");
 		}
 		// If the command received is equal to -g
 		else if (strcmp(buffer, "-g") == 0) {

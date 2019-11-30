@@ -25,6 +25,7 @@ elif (sys.argv[3] == '-g' and len(sys.argv) != 6):
 if (sys.argv[1] != 'flip1' and sys.argv[1] != 'flip2' and sys.argv[1] != 'flip3'): 
 	printUsage(sys.argv)
 else:
+	shortServerName = sys.argv[1]
 	serverName = sys.argv[1] + '.engr.oregonstate.edu'
 
 # Check serverPort
@@ -59,8 +60,8 @@ else:
 #############################################################################################
 ####################################### SOCKET SET UP #######################################
 #############################################################################################
-
-print "CLIENT: starting up on", serverName, "port", serverPort
+# For testing
+#print "CLIENT: starting up on", shortServerName, "port", serverPort
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -83,7 +84,7 @@ sock.send(shortHostName[0])
 sock.send(command)
 
 if (command == '-l'):
-	print "Receiving directory structure from " + serverName + ":" + str(serverPort)
+	print "Receiving directory structure from " + shortServerName + ":" + str(serverPort)
 
 # Receive the message
 serverMessage = sock.recv(2048)

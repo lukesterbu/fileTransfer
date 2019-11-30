@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 				error("ERROR reading from socket");
 			printf("File \"%s\" requested on port %d.\n", fileName, ntohs(clientAddress.sin_port));
 			// File doesn't exist
-			if (file = fopen(fileName, "r")) {
+			if (file = fopen("hello.txt", "r")) {
 				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
 				// Send file size
 

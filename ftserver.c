@@ -11,6 +11,7 @@
 
 #define BUFFER_SIZE 500
 #define DIRECTORY_SIZE 2048
+#define COMMAND_SIZE 3
 
 // Error handling function
 void error(const char *msg) {
@@ -45,6 +46,7 @@ int main(int argc, char *argv[])
 	struct sockaddr_in serverAddress, clientAddress;
 	char buffer[BUFFER_SIZE];
 	char fileName[BUFFER_SIZE];
+	char command[COMMAND_SIZE];
 	char allDirectories[DIRECTORY_SIZE];
 	char serverHostName[HOST_NAME_MAX];
 	char clientHostName[HOST_NAME_MAX];
@@ -85,7 +87,7 @@ int main(int argc, char *argv[])
 		if (establishedConnectionFD < 0)
 			error("ERROR on accept");
 
-		// Get the message from the client and display it
+		// Get the client host name
 		memset(clientHostName, '\0', HOST_NAME_MAX);
 		charsRead = recv(establishedConnectionFD, clientHostName, HOST_NAME_MAX - 1, 0);
 		if (charsRead < 0)
@@ -93,15 +95,15 @@ int main(int argc, char *argv[])
 		// Print out the client host name
 		printf("Connection from %s.\n", clientHostName);
 
-		// Get the message from the client and display it
-		memset(buffer, '\0', BUFFER_SIZE);
-		charsRead = recv(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0); // Read the client's message from the socket
+		// Get the command from the client
+		memset(command, '\0', COMMAND_SIZE);
+		charsRead = recv(establishedConnectionFD, command, COMMAND_SIZE - 1, 0); // Read the client's message from the socket
 		if (charsRead < 0)
 			error("ERROR reading from socket");
-		printf("SERVER: I received this from the client: \"%s\"\n", buffer);
+		printf("SERVER: I received this from the client: \"%s\"\n", command);
 
 		// If the command received is equal to -l
-		if (strcmp(buffer, "-l") == 0) {
+		if (strcmp(command, "-l") == 0) {
 			printf("List directory requested on port %d.\n", ntohs(clientAddress.sin_port));
 			printf("Sending directory contents to %s:%d\n", clientHostName, ntohs(clientAddress.sin_port));
 			memset(allDirectories, '\0', DIRECTORY_SIZE);
@@ -111,8 +113,7 @@ int main(int argc, char *argv[])
 				error("ERROR writing to the socket");
 		}
 		// If the command received is equal to -g
-		else if (strcmp(buffer, "-g") == 0) {
-			wait(1);
+		else if (strcmp(command, "-g") == 0) {
 			// Get requested file name from client
 			memset(fileName, '\0', BUFFER_SIZE);
 			charsRead = recv(establishedConnectionFD, fileName, BUFFER_SIZE - 1, 0);

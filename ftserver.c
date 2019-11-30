@@ -124,6 +124,7 @@ int main(int argc, char *argv[])
 			printf("File \"%s\" requested on port %d.\n", fileName, ntohs(clientAddress.sin_port));
 			// File doens't exist
 			fd = open(fileName, O_RDONLY);
+			printf("%d\n", fd);
 			if (fd == -1) {
 				printf("File not found. Sending error message to %s:%d", clientHostName, ntohs(clientAddress.sin_port));
 				memset(buffer, '\0', BUFFER_SIZE);	

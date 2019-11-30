@@ -83,7 +83,7 @@ sock.send(shortHostName[0])
 sock.send(command)
 
 if (command == '-l'):
-	print "Receiving directory structure from " + serverName + ":" + serverPort
+	print "Receiving directory structure from " + serverName + ":" + str(serverPort)
 
 # Receive the message
 serverMessage = sock.recv(2048)

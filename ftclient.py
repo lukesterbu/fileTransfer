@@ -66,13 +66,14 @@ print "CLIENT: starting up on", serverName, "port", serverPort
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Get host name
-host_name = socket.gethostname()
-shortHostName = host_name.split('.')
+hostName = socket.gethostname()
+shortHostName = hostName.split('.')
 
 # Bind the client to its port
 #sock.bind((host_ip,clientPort))
 
 # Connect to the socket
+sock.bind((hostName,clientPort))
 sock.connect((serverName,serverPort))
 
 # Send short server name

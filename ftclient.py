@@ -85,9 +85,14 @@ sock.send(command)
 
 if (command == '-l'):
 	print "Receiving directory structure from " + shortServerName + ":" + str(serverPort)
+elif (command == '-g'):
+	print 'Receiving "' + fileName + '" from ' + shortServerName + ':' + str(serverPort) 
 
 # Receive the message
 serverMessage = sock.recv(2048)
+
+if (command == '-g'):
+	print "File transfer complete."
 
 # Print the message
 print serverMessage

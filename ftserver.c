@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 	socklen_t sizeOfClientInfo;
 	struct sockaddr_in serverAddress, clientAddress;
 	char buffer[BUFFER_SIZE];
+	char fileName[BUFFER_SIZE];
 	char allDirectories[DIRECTORY_SIZE];
 	char serverHostName[HOST_NAME_MAX];
 	char clientHostName[HOST_NAME_MAX];
@@ -92,9 +93,6 @@ int main(int argc, char *argv[])
 		// Print out the client host name
 		printf("Connection from %s.\n", clientHostName);
 
-		// Print the client port number
-		printf("SERVER: Connected Client at port %d\n", ntohs(clientAddress.sin_port));
-
 		// Get the message from the client and display it
 		memset(buffer, '\0', BUFFER_SIZE);
 		charsRead = recv(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0); // Read the client's message from the socket
@@ -114,7 +112,22 @@ int main(int argc, char *argv[])
 		}
 		// If the command received is equal to -g
 		else if (strcmp(buffer, "-g") == 0) {
-			// Need code here
+			// Get requested file name from client
+			memset(fileName, '\0', BUFFER_SIZE);
+			charsRead = recv(establishedConnectionFD, fileName, BUFFER_SIZE - 1, 0);
+			if (charsRead < 0)
+				error("ERROR reading from socket");
+			printf("SERVER: I received this from the client: \"%s\"\n", fileName);
+
+			printf("File \"%s\" requested on port %d.\n", fileName, ntohs(clientAddress.sin_port));
+			// File exists
+			if (access(fileName, F_OK) != 1) {
+				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
+			}
+			// File doesn't exist
+			else {
+				printf("File not found. Sending error message to %s:%d", clientHostName, ntohs(clientAddress.sin_port));
+			}
 		}
 
 		close(establishedConnectionFD); // Close the existing socket which is connected to the client

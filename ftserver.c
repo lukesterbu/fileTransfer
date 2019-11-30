@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
 		}
 		// If the command received is equal to -g
 		else if (strcmp(buffer, "-g") == 0) {
-			fflush(stdout);
+			wait(1);
 			// Get requested file name from client
 			memset(fileName, '\0', BUFFER_SIZE);
 			charsRead = recv(establishedConnectionFD, fileName, BUFFER_SIZE - 1, 0);

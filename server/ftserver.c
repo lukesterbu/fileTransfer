@@ -239,7 +239,7 @@ void validateUser() {
 	printf("Password: ");
 	scanf("%s", password);
 	// Validate
-	if (strcmp(userName, "username") && strcmp(password, "password")) {
+	if (strcmp(userName, "username") == 0 && strcmp(password, "password") == 0) {
 		printf("Access granted!\n");
 	} 
 	else {

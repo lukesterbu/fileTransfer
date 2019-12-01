@@ -111,7 +111,6 @@ int main(int argc, char *argv[])
 				fileContents = readFile(&fileLength, fileName);
 				
 				// Send the file length to the client
-				fileLength = htonl(fileLength);
 				charsRead = send(establishedConnectionFD, &fileLength, sizeof(fileLength), 0);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");

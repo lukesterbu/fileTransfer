@@ -111,9 +111,9 @@ elif (command == '-g'):
 		fileLength = long(sock.recv(recvSize))
 		print fileLength
 		fileContents = ""
-		while (totalRead <= fileLength):
-			fileContents = fileContents + sock.recv(recvSize)
-			totalRead = len(fileContents)
+		#while (totalRead <= fileLength):
+		#	fileContents = fileContents + sock.recv(recvSize)
+		#	totalRead = len(fileContents)
 		# Create the file if it doesn't exist
 		file = open(fileName, "w")
 		# Write the contents to the file

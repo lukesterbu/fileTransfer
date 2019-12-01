@@ -139,10 +139,8 @@ int main(int argc, char *argv[])
 				if (strcmp(buffer, "RECEIVED") == 0) {
 					// If received then send file contents
 					int totalWritten = 0;
-					while (totalWritten <= fileLength) {
-						printf("%d\n", totalWritten);
+					while (totalWritten < fileLength - 1) {
 						charsRead = send(establishedConnectionFD, fileContents, strlen(fileContents), 0);
-						printf("%d\n", charsRead);
 						if (charsRead < 0)
 							error("ERROR writing to the socket");
 						totalWritten += charsRead;

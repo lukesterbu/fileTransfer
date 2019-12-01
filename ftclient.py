@@ -97,6 +97,7 @@ elif (command == '-g'):
 	else:
 		print 'Receiving "' + fileName + '" from ' + shortServerName + ':' + str(serverPort) 
 		fileContents = sock.recv(2048)
+		print fileContents
 		print "File transfer complete."
 
 # Close the socket

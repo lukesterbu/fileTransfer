@@ -108,7 +108,7 @@ elif (command == '-g'):
 	elif (fileMessage == 'FILE FOUND'):
 		print 'Receiving "' + fileName + '" from ' + shortServerName + ':' + str(serverPort) 
 		totalRead = 0
-		fileLength = sock.recv(recvSize)
+		fileLength = long(sock.recv(recvSize))
 		print fileLength
 		fileContents = ""
 		while (totalRead <= fileLength):

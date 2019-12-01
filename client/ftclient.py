@@ -93,27 +93,32 @@ sock.send(command)
 #############################################################################################
 ##################################### COMMAND HANDLING ######################################
 #############################################################################################
-
+# The command is -l which indicates a directory listing
 if (command == '-l'):
 	print "Receiving directory structure from " + shortServerName + ":" + str(serverPort)
 	# Receive the message
 	serverMessage = sock.recv(recvSize)
 	# Print the message
 	print serverMessage
+# The command is -g which indicates a file transfer
 elif (command == '-g'):
 	sock.send(fileName)
 	fileMessage = sock.recv(recvSize)
+	# The file wasn't found
 	if (fileMessage == 'FILE NOT FOUND'):
 		print shortServerName + ":" + str(serverPort) + " says " + fileMessage
+	# The file was found
 	elif (fileMessage == 'FILE FOUND'):
 		print 'Receiving "' + fileName + '" from ' + shortServerName + ':' + str(serverPort) 
 		totalRead = 0
+		# Get the length of the file
 		fileLength = long(sock.recv(recvSize))
-		print fileLength
-		fileContents = ""
-		#while (totalRead <= fileLength):
-		#	fileContents = fileContents + sock.recv(recvSize)
-		#	totalRead = len(fileContents)
+		if (isnumeric(fileLength)):
+			fileContents = ""
+			# Loop until the entire file has been received
+			while (totalRead <= fileLength):
+				fileContents = fileContents + sock.recv(recvSize)
+				totalRead = len(fileContents)
 		# Create the file if it doesn't exist
 		file = open(fileName, "w")
 		# Write the contents to the file

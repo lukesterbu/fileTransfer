@@ -232,7 +232,7 @@ char* getDir() {
 void validateUser() {
 	char username[20];
 	char password[20];
-	memset(userName, '\0', 20);
+	memset(username, '\0', 20);
 	memset(password, '\0', 20);
 	// Get user input
 	printf("Username: ");

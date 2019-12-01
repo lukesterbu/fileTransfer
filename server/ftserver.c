@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
 	char clientHostName[HOST_NAME_MAX];
 	char* fileContents; // will allocate dynamically later
 	long fileLength = -5;
+	char* fileLengthStr[BUFFER_SIZE];
 
 	// Check usage and args
 	if (argc < 2) {
@@ -111,7 +112,8 @@ int main(int argc, char *argv[])
 				fileContents = readFile(&fileLength, fileName);
 				
 				// Send the file length to the client
-				charsRead = send(establishedConnectionFD, &fileLength, sizeof(fileLength), 0);
+				sprintf(fileLengthStr, "%lu", fileLength);
+				charsRead = send(establishedConnectionFD, fileLengthStr, sizeof(fileLengthStr), 0);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");
 				

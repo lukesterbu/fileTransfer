@@ -112,6 +112,7 @@ int main(int argc, char *argv[])
 				fileContents = readFile(&fileLength, fileName);
 				
 				// Send the file length to the client
+				memset(fileLengthStr, '\0', sizeof(fileLengthStr));
 				sprintf(fileLengthStr, "%lu", fileLength);
 				printf("%s\n", fileLengthStr);
 				charsRead = send(establishedConnectionFD, fileLengthStr, sizeof(fileLengthStr), 0);

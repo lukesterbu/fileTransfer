@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 			printf("Sending directory contents to %s:%d\n", clientHostName, ntohs(clientAddress.sin_port));
 			memset(allDirectories, '\0', DIRECTORY_SIZE);
 			strcpy(allDirectories, getDir());
-			charsRead = send(establishedConnectionFD, allDirectories, DIRECTORY_SIZE - 1, 0);
+			charsRead = send(establishedConnectionFD, allDirectories, strlen(allDirectories), 0);
 			if (charsRead < 0)
 				error("ERROR writing to the socket");
 		}

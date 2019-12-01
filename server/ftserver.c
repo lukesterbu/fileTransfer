@@ -113,6 +113,7 @@ int main(int argc, char *argv[])
 				
 				// Send the file length to the client
 				sprintf(fileLengthStr, "%lu", fileLength);
+				printf("%s\n", fileLengthStr);
 				charsRead = send(establishedConnectionFD, fileLengthStr, sizeof(fileLengthStr), 0);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");

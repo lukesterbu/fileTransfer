@@ -126,6 +126,7 @@ int main(int argc, char *argv[])
 					error("ERROR writing to the socket");
 				// Send file length
 				fileContents = readFile(&fileLength, fileName);
+				memset(fileLengthStr, '\0', BUFFER_SIZE);
 				sprintf(fileLengthStr, "%lu", fileLength); // Convert file length to string
 				charsRead = send(establishedConnectionFD, fileLengthStr, strlen(fileLengthStr), 0);
 				if (charsRead < 0)

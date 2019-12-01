@@ -90,7 +90,7 @@ if (command == '-l'):
 	# Receive the message
 	serverMessage = sock.recv(recvSize)
 	# Print the message
-	print serverMessage
+	print str(serverMessage)
 elif (command == '-g'):
 	sock.send(fileName)
 	fileMessage = sock.recv(recvSize)

@@ -122,6 +122,7 @@ int main(int argc, char *argv[])
 				// Get the file contents
 				//fileContents = readFile(&fileLength, fileName);
 				charsRead = send(establishedConnectionFD, fileContents, strlen(fileContents), 0);
+				printf("%d\n", charsRead);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");
 			}

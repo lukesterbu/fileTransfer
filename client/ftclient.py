@@ -69,8 +69,6 @@ else:
 #############################################################################################
 ####################################### SOCKET SET UP #######################################
 #############################################################################################
-# For testing
-#print "CLIENT: starting up on", shortServerName, "port", serverPort
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -91,6 +89,10 @@ sock.send(shortHostName[0])
 
 # Send the command
 sock.send(command)
+
+#############################################################################################
+##################################### COMMAND HANDLING ######################################
+#############################################################################################
 
 if (command == '-l'):
 	print "Receiving directory structure from " + shortServerName + ":" + str(serverPort)

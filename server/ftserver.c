@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 	char clientHostName[HOST_NAME_MAX];
 	char* fileContents; // will allocate dynamically later
 	long fileLength = -5;
-	char* fileLengthStr[BUFFER_SIZE];
+	char fileLengthStr[BUFFER_SIZE];
 
 	// Check usage and args
 	if (argc < 2) {

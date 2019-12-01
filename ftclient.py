@@ -92,8 +92,7 @@ if (command == '-l'):
 elif (command == '-g'):
 	sock.send(fileName)
 	fileMessage = sock.recv(2048)
-	print len(fileMessage)
-	print len('FILE NOT FOUND')
+	fileMessage = fileMessage.strip()
 	if (fileMessage == 'FILE NOT FOUND'):
 		print shortServerName + ":" + str(serverPort) + " says " + fileMessage
 	else:

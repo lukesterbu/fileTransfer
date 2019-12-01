@@ -101,6 +101,7 @@ elif (command == '-g'):
 		fileLength = sock.recv(recvSize)
 		totalRead = 0
 		# Receive the file contents
+		fileContents = ""
 		while (totalRead <= fileLength):
 			fileContents += sock.recv(recvSize)
 			print fileContents

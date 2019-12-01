@@ -111,7 +111,6 @@ int main(int argc, char *argv[])
 				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
 				// Get the file contents
 				fileContents = readFile(&fileLength, fileName);
-				strcat(fileContents, '\0');
 				charsRead = send(establishedConnectionFD, fileContents, sizeof(fileContents) - 1, 0); // Write to the server
 				if (charsRead < 0) 
 					error("CLIENT: ERROR writing to socket");

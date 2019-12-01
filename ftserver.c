@@ -114,14 +114,14 @@ int main(int argc, char *argv[])
 				charsRead = send(establishedConnectionFD, &fileLength, sizeof(fileLength), 0);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");
-				int totalWritten = 0;
 				
 				// Will send file contents in chunks if necessary
+				int totalWritten = 0;
 				while (totalWritten <= fileLength) {
 					char copy[MAX_SIZE];
 					memset(copy, '\0', sizeof(copy));
 					// Copies from where the last iteration left off
-					strncpy(copy, &ciphertext[totalWritten], MAX_SIZE - 1);
+					strncpy(copy, &fileContents[totalWritten], MAX_SIZE - 1);
 					// Send ciphertext to server
 					charsRead = send(establishedConnectionFD, &copy, sizeof(copy), 0); // Write to the server
 					if (charsRead < 0) 

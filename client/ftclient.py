@@ -3,7 +3,7 @@ import socket
 import sys
 import struct
 
-recvSize = 1000
+recvSize = 2048
 
 # Shows the user the correct usage and then exits with code 1
 def printUsage(argv):

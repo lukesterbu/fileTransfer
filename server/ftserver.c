@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 				
 				// Will send file contents in chunks if necessary
 				int totalWritten = 0;
-				while (totalWritten <= fileLength) {
+				/* while (totalWritten <= fileLength) {
 					char copy[MAX_SIZE];
 					memset(copy, '\0', sizeof(copy));
 					// Copies from where the last iteration left off
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 					charsRead = send(establishedConnectionFD, &copy, sizeof(copy), 0); // Write to the server
 					if (charsRead < 0) 
 						error("CLIENT: ERROR writing to socket");
-					totalWritten += charsRead - 1;
+					totalWritten += charsRead - 1; */
 				}
 			}
 			

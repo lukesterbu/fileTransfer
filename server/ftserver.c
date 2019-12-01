@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
 	char clientHostName[HOST_NAME_MAX];
 	char* fileContents; // will allocate dynamically later
 	long fileLength = -5;
+	char temp[BUFFER_SIZE];
 	char fileLengthStr[BUFFER_SIZE];
 
 	// Check usage and args
@@ -112,9 +113,11 @@ int main(int argc, char *argv[])
 				fileContents = readFile(&fileLength, fileName);
 				
 				// Send the file length to the client
+				memset(temp, '\0', BUFFER_SIZE);
 				memset(fileLengthStr, '\0', BUFFER_SIZE);
-				sprintf(fileLengthStr, "%lu", fileLength);
-				charsRead = send(establishedConnectionFD, &fileLengthStr, BUFFER_SIZE - 1, 0);
+				sprintf(temp, "%lu", fileLength);
+				strcpy(fileLengthStr, temp);
+				charsRead = send(establishedConnectionFD, fileLengthStr, BUFFER_SIZE - 1, 0);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");
 				

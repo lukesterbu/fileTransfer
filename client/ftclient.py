@@ -99,7 +99,8 @@ elif (command == '-g'):
 	else:
 		print 'Receiving "' + fileName + '" from ' + shortServerName + ':' + str(serverPort) 
 		fileContents = sock.recv(recvSize)
-			
+		print len(fileContents)
+		print fileContents
 		# Create the file if it doesn't exist
 		file = open(fileName, "w")
 		# Write the contents to the file

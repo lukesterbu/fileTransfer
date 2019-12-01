@@ -1,3 +1,12 @@
+/*############################################################################################
+# Author: 			Luke Burris
+# Name:				ftclient.py
+# Description:		Either requests a copy of all items in the server's directory with the
+#					command "-l" or requests a copy of a file with the command "-g"
+# Course Name:		CS 372
+# Last Modified:	12/1/2019
+###########################################################################################*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

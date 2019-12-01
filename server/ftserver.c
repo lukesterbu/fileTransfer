@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 	char serverHostName[HOST_NAME_MAX];
 	char clientHostName[HOST_NAME_MAX];
 	char* fileContents; // will allocate dynamically later
+	char* fileNotFound = "FILE NOT FOUND";
 	long fileLength = -5;
 	char temp[BUFFER_SIZE];
 	char fileLengthStr[BUFFER_SIZE];
@@ -110,20 +111,16 @@ int main(int argc, char *argv[])
 			if (fileExists(fileName)) {
 				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
 				// Get the file contents
-				//fileContents = readFile(&fileLength, fileName);
-				memset(temp, '\0', BUFFER_SIZE);
-				strcpy(temp, "wow");
-				charsRead = send(establishedConnectionFD, temp, BUFFER_SIZE - 1, 0); // Write to the server
-				if (charsRead < 0) 
-					error("CLIENT: ERROR writing to socket");
+				fileContents = readFile(&fileLength, fileName);
+				charsRead = send(establishedConnectionFD, fileContents, strlen(fileContents), 0);
+				if (charsRead < 0)
+					error("ERROR writing to the socket");
 			}
 			
 			// File doesn't exists
 			else {
 				printf("File not found. Sending error message to %s:%d\n", clientHostName, ntohs(clientAddress.sin_port));
-				memset(buffer, '\0', BUFFER_SIZE);	
-				strcpy(buffer, "FILE NOT FOUND");
-				charsRead = send(establishedConnectionFD, buffer, BUFFER_SIZE - 1, 0);
+				charsRead = send(establishedConnectionFD, fileNotFound, strlen(fileNotFound), 0);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");
 			}

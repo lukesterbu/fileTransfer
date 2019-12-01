@@ -111,7 +111,7 @@ elif (command == '-g'):
 		# Create the file if it doesn't exist
 		file = open(fileName, "w")
 		# Write the contents to the file
-		file.write(fileContents)
+		file.write(fileContents + '\n')
 		file.close()
 		print "File transfer complete."
 

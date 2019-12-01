@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
 				//fileContents = readFile(&fileLength, fileName);
 				memset(temp, '\0', BUFFER_SIZE);
 				strcpy(temp, "wow");
-				charsRead = send(establishedConnectionFD, temp, BUFFER_SIZE - 1, 0); // Write to the server
+				charsRead = send(establishedConnectionFD, &temp, BUFFER_SIZE - 1, 0); // Write to the server
 				if (charsRead < 0) 
 					error("CLIENT: ERROR writing to socket");
 			}

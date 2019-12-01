@@ -111,10 +111,11 @@ int main(int argc, char *argv[])
 				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
 				// Get the file contents
 				//fileContents = readFile(&fileLength, fileName);
-				charsRead = send(establishedConnectionFD, "wow\0", 4, 0); // Write to the server
+				memset(temp, '\0', BUFFER_SIZE);
+				strcpy(temp, "wow");
+				charsRead = send(establishedConnectionFD, temp, BUFFER_SIZE - 1, 0); // Write to the server
 				if (charsRead < 0) 
 					error("CLIENT: ERROR writing to socket");
-				printf("Hello\n");
 			}
 			
 			// File doesn't exists

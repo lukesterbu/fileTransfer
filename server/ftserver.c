@@ -108,35 +108,13 @@ int main(int argc, char *argv[])
 			
 			// File does exist
 			if (fileExists(fileName)) {
-				// Get file stats
 				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
+				// Get the file contents
 				fileContents = readFile(&fileLength, fileName);
-
-				printf("%s\n", fileContents);
-				
-				// Send the file length to the client
-				/*memset(temp, '\0', BUFFER_SIZE);
-				memset(fileLengthStr, '\0', BUFFER_SIZE);
-				sprintf(temp, "%lu", fileLength);
-				strcpy(fileLengthStr, temp);
-				printf("%s\n", fileLengthStr);
-				charsRead = send(establishedConnectionFD, fileLengthStr, BUFFER_SIZE - 1, 0);
-				if (charsRead < 0)
-					error("ERROR writing to the socket");*/
-				
-				// Will send file contents in chunks if necessary
-				//int totalWritten = 0;
-				/* while (totalWritten <= fileLength) { */
-					//char copy[MAX_SIZE];
-					//memset(copy, '\0', sizeof(copy));
-					// Copies from where the last iteration left off
-					//strncpy(copy, &fileContents[totalWritten], MAX_SIZE - 1);
-					// Send ciphertext to server
-					charsRead = send(establishedConnectionFD, fileContents, sizeof(fileContents) - 1, 0); // Write to the server
-					if (charsRead < 0) 
-						error("CLIENT: ERROR writing to socket");
-					//totalWritten += charsRead - 1; 
-				/*} */
+				strcat(fileContents, '\0');
+				charsRead = send(establishedConnectionFD, fileContents, sizeof(fileContents) - 1, 0); // Write to the server
+				if (charsRead < 0) 
+					error("CLIENT: ERROR writing to socket");
 			}
 			
 			// File doesn't exists

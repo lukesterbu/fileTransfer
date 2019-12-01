@@ -10,35 +10,16 @@
 #include <limits.h>
 #include <fcntl.h>
 
-#define BUFFER_SIZE 500
-#define DIRECTORY_SIZE 2048
-#define COMMAND_SIZE 3
+#define BUFFER_SIZE 	500
+#define DIRECTORY_SIZE 	2048
+#define COMMAND_SIZE 	3
+#define MAX_SIZE 		1000
 
-// Error handling function
-void error(const char *msg) {
-	perror(msg);
-	exit(1);
-}
-
-// Returns all the files in the current directory as a string
-char* getDir() {
-	char* allDirectories = (char*)malloc(sizeof(char) * DIRECTORY_SIZE);
-	struct dirent* entry;
-
-	DIR* directory = opendir(".");
-
-	if (directory == NULL) {
-		return allDirectories;
-	}
-
-	memset(allDirectories, '\0', DIRECTORY_SIZE);
-
-	while ((entry = readdir(directory)) != NULL) {
-		strcat(allDirectories, entry->d_name);
-		strcat(allDirectories, "\n");
-	}
-	return allDirectories;
-}
+// Function prototypes
+int fileExists(char*);
+char* readFile(long*, char*);
+void error(const char*);
+char* getDir();
 
 int main(int argc, char *argv[])
 {
@@ -51,7 +32,8 @@ int main(int argc, char *argv[])
 	char allDirectories[DIRECTORY_SIZE];
 	char serverHostName[HOST_NAME_MAX];
 	char clientHostName[HOST_NAME_MAX];
-	FILE* file;
+	char* fileContents; // will allocate dynamically later
+	long fileLength = -5;
 
 	// Check usage and args
 	if (argc < 2) {
@@ -102,7 +84,6 @@ int main(int argc, char *argv[])
 		charsRead = recv(establishedConnectionFD, command, COMMAND_SIZE - 1, 0); // Read the client's message from the socket
 		if (charsRead < 0)
 			error("ERROR reading from socket");
-		//printf("SERVER: I received this from the client: \"%s\"\n", command);
 
 		// If the command received is equal to -l
 		if (strcmp(command, "-l") == 0) {
@@ -122,13 +103,33 @@ int main(int argc, char *argv[])
 			if (charsRead < 0)
 				error("ERROR reading from socket");
 			printf("File \"%s\" requested on port %d.\n", fileName, ntohs(clientAddress.sin_port));
+			
 			// File does exist
-			if (file = fopen("hello.txt", "r")) {
+			if (fileExists(fileName)) {
+				// Get file stats
 				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
-				// Send file size
-
-				// Send file contents
+				fileContents = readFile(&fileLength, fileName);
+				
+				// Send the file length to the client
+				charsRead = send(establishedConnectionFD, &fileLength, sizeof(fileLength), 0);
+				if (charsRead < 0)
+					error("ERROR writing to the socket");
+				int totalWritten = 0;
+				
+				// Will send file contents in chunks if necessary
+				while (totalWritten <= fileLength) {
+					char copy[MAX_SIZE];
+					memset(copy, '\0', sizeof(copy));
+					// Copies from where the last iteration left off
+					strncpy(copy, &ciphertext[totalWritten], MAX_SIZE - 1);
+					// Send ciphertext to server
+					charsRead = send(establishedConnectionFD, &copy, sizeof(copy), 0); // Write to the server
+					if (charsRead < 0) 
+						error("CLIENT: ERROR writing to socket");
+					totalWritten += charsRead - 1;
+				}
 			}
+			
 			// File doesn't exists
 			else {
 				printf("File not found. Sending error message to %s:%d\n", clientHostName, ntohs(clientAddress.sin_port));
@@ -144,4 +145,65 @@ int main(int argc, char *argv[])
 	}
 	close(listenSocketFD); // Close the listening socket
 	return 0;
+}
+
+// Returns 1 if the file exists and 0 if it doesn't exist
+int fileExists(char* fileName) {
+	int file = open(fileName, O_RDONLY);
+	if (file == -1) {
+		return 0;
+	}
+	close(file);
+	return 1;
+}
+
+// Returns the first line of the file referred to by fileName
+char* readFile(long* fileLength, char* fileName) {
+	int file = open(fileName, O_RDONLY);
+	// Check to see if file was opened
+	if (file == -1) {
+		fprintf(stderr, "Could not open %s\n", fileName);
+		exit(1);
+	}
+	// Get the length of the file
+	*fileLength = lseek(file, 0, SEEK_END);
+	// Reset file pointer to beginning of file
+	lseek(file, 0, SEEK_SET); 
+	// Dynamically allocate buffer based on file length
+	char* buffer = malloc(sizeof(char) * (*fileLength));
+	// Read the first line of the file
+	if (read(file, buffer, *fileLength) == -1) {
+		fprintf(stderr, "There is no content in file %s\n", fileName);
+		exit(1);
+	}
+	buffer[(*fileLength) - 1] = '\0'; // Remove the trailing \n that fgets adds
+	// Close the file
+	close(file);
+	return buffer;
+}
+
+// Error handling function
+void error(const char *msg) {
+	perror(msg);
+	exit(1);
+}
+
+// Returns all the files in the current directory as a string
+char* getDir() {
+	char* allDirectories = (char*)malloc(sizeof(char) * DIRECTORY_SIZE);
+	struct dirent* entry;
+
+	DIR* directory = opendir(".");
+
+	if (directory == NULL) {
+		return allDirectories;
+	}
+
+	memset(allDirectories, '\0', DIRECTORY_SIZE);
+
+	while ((entry = readdir(directory)) != NULL) {
+		strcat(allDirectories, entry->d_name);
+		strcat(allDirectories, "\n");
+	}
+	return allDirectories;
 }

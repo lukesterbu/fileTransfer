@@ -29,6 +29,7 @@ int fileExists(char*);
 char* readFile(long*, char*);
 void error(const char*);
 char* getDir();
+void validateUser();
 
 int main(int argc, char *argv[])
 {
@@ -53,6 +54,9 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "USAGE: %s port\n", argv[0]);
 		exit(1);
 	}
+
+	// Username and password
+	validateUser();
 
 	// Get this server's host name
 	gethostname(serverHostName, HOST_NAME_MAX + 1);
@@ -222,4 +226,24 @@ char* getDir() {
 		strcat(allDirectories, "\n");
 	}
 	return allDirectories;
+}
+
+void validateUser() {
+	char userName[9];
+	char password[9];
+	memset(userName, '\0', 9);
+	memset(password, '\0', 9);
+	// Get user input
+	printf("Username: ");
+	scanf("%s", userName);
+	printf("Password: ");
+	scanf("%s", password);
+	// Validate
+	if (strcmp(userName, "username") && strcmp(password, "password")) {
+		printf("Access granted!\n");
+	} 
+	else {
+		printf("Access denied!\n");
+		exit(1);
+	}
 }

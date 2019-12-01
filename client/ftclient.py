@@ -6,6 +6,7 @@
 #					command "-l" or requests a copy of a file with the command "-g"
 # Course Name:		CS 372
 # Last Modified:	12/1/2019
+# References:		CS372 socket code, geeksforgeeks.org, stackoverflow.com
 #############################################################################################
 import socket
 import sys

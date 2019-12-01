@@ -5,6 +5,7 @@
 #					command "-l" or requests a copy of a file with the command "-g"
 # Course Name:		CS 372
 # Last Modified:	12/1/2019
+# References:		CS344 socket code, geeksforgeeks.org, stackoverflow.com
 ###########################################################################################*/
 
 #include <stdio.h>
@@ -229,13 +230,13 @@ char* getDir() {
 }
 
 void validateUser() {
-	char userName[9];
-	char password[9];
-	memset(userName, '\0', 9);
-	memset(password, '\0', 9);
+	char username[20];
+	char password[20];
+	memset(userName, '\0', 20);
+	memset(password, '\0', 20);
 	// Get user input
 	printf("Username: ");
-	scanf("%s", userName);
+	scanf("%s", username);
 	printf("Password: ");
 	scanf("%s", password);
 	// Validate

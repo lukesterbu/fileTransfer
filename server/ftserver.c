@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	char allDirectories[DIRECTORY_SIZE];
 	char serverHostName[HOST_NAME_MAX];
 	char clientHostName[HOST_NAME_MAX];
-	char* fileContents; // will allocate dynamically later
+	char* fileContents; = "TEST"; // will allocate dynamically later
 	char* fileNotFound = "FILE NOT FOUND";
 	long fileLength = -5;
 	char temp[BUFFER_SIZE];
@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
 			if (fileExists(fileName)) {
 				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
 				// Get the file contents
-				fileContents = readFile(&fileLength, fileName);
+				//fileContents = readFile(&fileLength, fileName);
 				charsRead = send(establishedConnectionFD, fileContents, strlen(fileContents), 0);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");

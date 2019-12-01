@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 				// Send the file length to the client
 				memset(fileLengthStr, '\0', BUFFER_SIZE);
 				sprintf(fileLengthStr, "%lu", fileLength);
-				charsRead = send(establishedConnectionFD, fileLengthStr, BUFFER_SIZE - 1, 0);
+				charsRead = send(establishedConnectionFD, &fileLengthStr, BUFFER_SIZE - 1, 0);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");
 				
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 					if (charsRead < 0) 
 						error("CLIENT: ERROR writing to socket");
 					totalWritten += charsRead - 1; 
-				}*/
+				} */
 			}
 			
 			// File doesn't exists

@@ -111,6 +111,8 @@ int main(int argc, char *argv[])
 				// Get file stats
 				printf("Sending \"%s\" to %s:%d\n", fileName, clientHostName, ntohs(clientAddress.sin_port));
 				fileContents = readFile(&fileLength, fileName);
+
+				printf("%s\n", fileContents);
 				
 				// Send the file length to the client
 				/*memset(temp, '\0', BUFFER_SIZE);
@@ -130,7 +132,7 @@ int main(int argc, char *argv[])
 					// Copies from where the last iteration left off
 					//strncpy(copy, &fileContents[totalWritten], MAX_SIZE - 1);
 					// Send ciphertext to server
-					charsRead = send(establishedConnectionFD, fileContents, sizeof(fileContents), 0); // Write to the server
+					charsRead = send(establishedConnectionFD, fileContents, sizeof(fileContents) - 1, 0); // Write to the server
 					if (charsRead < 0) 
 						error("CLIENT: ERROR writing to socket");
 					//totalWritten += charsRead - 1; 

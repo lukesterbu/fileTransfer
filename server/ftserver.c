@@ -124,11 +124,19 @@ int main(int argc, char *argv[])
 				charsRead = send(establishedConnectionFD, fileFound, strlen(fileFound), 0);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");
-				// Send file contents
+				// Send file length
 				fileContents = readFile(&fileLength, fileName);
-				charsRead = send(establishedConnectionFD, fileContents, strlen(fileContents), 0);
+				charsRead = send(establishedConnectionFD, &fileLength, sizeof(fileLength), 0);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");
+				// Send file contents
+				int totalWritten = 0;
+				while (totalWritten <= fileLength) {
+					charsRead = send(establishedConnectionFD, fileContents, strlen(fileContents), 0);
+					if (charsRead < 0)
+						error("ERROR writing to the socket");
+					totalWritten += charsRead;
+				}
 			}
 			
 			// File doesn't exists

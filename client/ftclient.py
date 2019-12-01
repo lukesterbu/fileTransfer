@@ -113,12 +113,12 @@ elif (command == '-g'):
 		totalRead = 0
 		# Get the length of the file
 		fileLength = long(sock.recv(recvSize))
-		if (isnumeric(fileLength)):
-			fileContents = ""
-			# Loop until the entire file has been received
-			while (totalRead <= fileLength):
-				fileContents = fileContents + sock.recv(recvSize)
-				totalRead = len(fileContents)
+		sock.send("RECEIVED")
+		fileContents = ""
+		# Loop until the entire file has been received
+		while (totalRead <= fileLength):
+			fileContents = fileContents + sock.recv(recvSize)
+			totalRead = len(fileContents)
 		# Create the file if it doesn't exist
 		file = open(fileName, "w")
 		# Write the contents to the file

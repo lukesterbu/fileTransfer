@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import socket
 import sys
-import struct
 
 recvSize = 2048
 
@@ -105,6 +104,7 @@ elif (command == '-g'):
 		file = open(fileName, "w")
 		# Write the contents to the file
 		file.write(fileContents)
+		file.close()
 		print "File transfer complete."
 
 # Close the socket

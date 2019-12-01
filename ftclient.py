@@ -91,14 +91,12 @@ if (command == '-l'):
 	print serverMessage
 elif (command == '-g'):
 	sock.send(fileName)
-	serverMessage = sock.recv(2048)
-	print serverMessage
-	if (str(serverMessage) == 'FILE NOT FOUND'):
-		print shortServerName + ":" + str(serverPort) + " says " + serverMessage
+	fileMessage = sock.recv(2048)
+	if (fileMessage == 'FILE NOT FOUND'):
+		print shortServerName + ":" + str(serverPort) + " says " + fileMessage
 	else:
-		print serverMessage
 		print 'Receiving "' + fileName + '" from ' + shortServerName + ':' + str(serverPort) 
-		serverMessage = sock.recv(2048)
+		fileContents = sock.recv(2048)
 		print "File transfer complete."
 
 # Close the socket

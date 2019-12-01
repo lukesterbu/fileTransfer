@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	char allDirectories[DIRECTORY_SIZE];
 	char serverHostName[HOST_NAME_MAX];
 	char clientHostName[HOST_NAME_MAX];
-	char* fileContents; = "TEST"; // will allocate dynamically later
+	char* fileContents = "TEST"; // will allocate dynamically later
 	char* fileNotFound = "FILE NOT FOUND";
 	long fileLength = -5;
 	char temp[BUFFER_SIZE];

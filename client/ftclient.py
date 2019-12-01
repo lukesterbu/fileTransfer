@@ -98,7 +98,7 @@ elif (command == '-g'):
 		print shortServerName + ":" + str(serverPort) + " says " + fileMessage
 	else:
 		print 'Receiving "' + fileName + '" from ' + shortServerName + ':' + str(serverPort) 
-		fileLength = long(sock.recv(recvSize))
+		fileLength = sock.recv(recvSize)
 		print fileLength
 		totalRead = 0
 		# Receive the file contents

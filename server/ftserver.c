@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 	char serverHostName[HOST_NAME_MAX];
 	char clientHostName[HOST_NAME_MAX];
 	char* fileContents; // will allocate dynamically later
-	char* fileLength = -5;
+	long fileLength = -5;
 
 	// Check usage and args
 	if (argc < 2) {

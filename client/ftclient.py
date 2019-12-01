@@ -117,6 +117,7 @@ elif (command == '-g'):
 		fileContents = ""
 		# Loop until the entire file has been received
 		while (totalRead <= fileLength):
+			print totalRead + " = " + fileLength
 			fileContents = fileContents + sock.recv(recvSize)
 			totalRead = len(fileContents)
 		# Create the file if it doesn't exist

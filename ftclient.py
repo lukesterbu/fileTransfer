@@ -3,6 +3,8 @@ import socket
 import sys
 import signal
 
+recvSize = 1000
+
 # Shows the user the correct usage and then exits with code 1
 def printUsage(argv):
 	print 'USAGE: %s [serverName] [serverPort] [command (-l or -g)] [fileName (optional if command is -l)] [clientPort]' % argv[0]
@@ -86,18 +88,28 @@ sock.send(command)
 if (command == '-l'):
 	print "Receiving directory structure from " + shortServerName + ":" + str(serverPort)
 	# Receive the message
-	serverMessage = sock.recv(2048)
+	serverMessage = sock.recv(recvSize)
 	# Print the message
 	print serverMessage
 elif (command == '-g'):
 	sock.send(fileName)
-	fileMessage = sock.recv(2048)
+	fileMessage = sock.recv(recvSize)
 	if ('FILE NOT FOUND' in fileMessage):
 		print shortServerName + ":" + str(serverPort) + " says " + fileMessage
 	else:
 		print 'Receiving "' + fileName + '" from ' + shortServerName + ':' + str(serverPort) 
-		fileContents = sock.recv(2048)
-		print fileContents
+		fileLength = sock.recv(recvSize)
+		totalRead = 0
+		# Receive the file contents
+		while (totalRead <= fileLength):
+			fileContents += sock.recv(recvSize)
+			print fileContents
+			totalRead += recvSize
+			
+		# Create the file if it doesn't exist
+		file = open(fileName, "w")
+		# Write the contents to the file
+		file.write(fileContents)
 		print "File transfer complete."
 
 # Close the socket

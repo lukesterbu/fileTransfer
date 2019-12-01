@@ -126,8 +126,8 @@ int main(int argc, char *argv[])
 					charsRead = send(establishedConnectionFD, &copy, sizeof(copy), 0); // Write to the server
 					if (charsRead < 0) 
 						error("CLIENT: ERROR writing to socket");
-					totalWritten += charsRead - 1; */
-				}
+					totalWritten += charsRead - 1; 
+				}*/
 			}
 			
 			// File doesn't exists

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import socket
 import sys
-import signal
+import struct
 
 recvSize = 1000
 

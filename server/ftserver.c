@@ -117,6 +117,7 @@ int main(int argc, char *argv[])
 				memset(fileLengthStr, '\0', BUFFER_SIZE);
 				sprintf(temp, "%lu", fileLength);
 				strcpy(fileLengthStr, temp);
+				printf("%s\n", fileLengthStr);
 				charsRead = send(establishedConnectionFD, fileLengthStr, BUFFER_SIZE - 1, 0);
 				if (charsRead < 0)
 					error("ERROR writing to the socket");

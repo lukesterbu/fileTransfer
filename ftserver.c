@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 
 	// Check usage and args
 	if (argc < 2) {
-		fprintf(stderr, "USAGE: %s port\n", argv[0]);
+		fprintf(stderr, "USAGE: %s [port]\n", argv[0]);
 		exit(1);
 	}
 

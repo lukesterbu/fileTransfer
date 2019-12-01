@@ -15,7 +15,7 @@ recvSize = 2048
 
 # Shows the user the correct usage and then exits with code 1
 def printUsage(argv):
-	print 'USAGE: %s [serverName] [serverPort] [command (-l or -g)] [fileName (optional if command is -l)] [clientPort]' % argv[0]
+	print 'USAGE: %s [serverName] [serverPort] [command (-l or -g)] [fileName (if command is -g)] [clientPort]' % argv[0]
 	exit(1)
 
 #############################################################################################
